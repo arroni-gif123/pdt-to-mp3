@@ -3,7 +3,7 @@ import PyPDF2 as pdf
 from gtts import gTTS
 
 def get_page(num: int, filename: str):
-    " " " Get a page of the pdf named book.pdf " " "
+    " " " Get a page of the pdf " " "
     num -= 1
     book = open(filename, 'rb')
     reader = pdf.PdfFileReader(book)
@@ -14,7 +14,7 @@ def get_page(num: int, filename: str):
     return result
 
 def replace_chars(tpsext: str):
-    " " " replace po" " "
+    " " " fix possibly badly encoded characters" " "
     lista = list(text)
     for i in dict(enumerate(lista)):
         if lista[i] =='™':
@@ -52,14 +52,14 @@ if __name__ == '__main__':
             print('Invalid value. Try again!')
     while True:
         try:
-            start = int(input('At what page should I start.'))
+            start = int(input('At what page should I start?'))
             break
         except Exception as error:
             print('Invalid value. Try again!')
 
     while True:
         try:
-            stop = int(input('At what page should I stop.'))
+            stop = int(input('At what page should I stop?'))
             break
         except Exception as error:
             print('Invalid value. Try again!')
