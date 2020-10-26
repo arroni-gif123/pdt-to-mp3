@@ -2,10 +2,10 @@
 import PyPDF2 as pdf
 from gtts import gTTS
 
-def get_page(num: int):
+def get_page(num: int, filename: str):
     " " " Get a page of the pdf named book.pdf " " "
     num -= 1
-    book = open('book.pdf', 'rb')
+    book = open(filename, 'rb')
     reader = pdf.PdfFileReader(book)
     page = reader.getPage(num)
     text = str(page.extractText())
@@ -13,8 +13,8 @@ def get_page(num: int):
     result = replace_chars(text)
     return result
 
-def replace_chars(text: str):
-    " " " docstring " " "
+def replace_chars(tpsext: str):
+    " " " replace po" " "
     lista = list(text)
     for i in dict(enumerate(lista)):
         if lista[i] =='™':
@@ -31,15 +31,37 @@ def save(text: str, mp3name: str):
     engine = gTTS(text=text, lang='en', slow=False)
     engine.save(f'{mp3name}.mp3')
 
-def main(start: int, stop: int):
-    " " " Combine the other scripts, read the pages from start to stop, and save em" " "
+def main(start: int, stop: int, filename: str):
+    " " " Combine the other scripts, read the pages from start to stop, and save them" " "
     for page_no in range(start, stop+1):
-        page = get_page(page_no)
+        page = get_page(page_no, filename)
         print(page)
         print('#############################', page_no)
         save(page, f'Page_{page_no}')
     
     
 if __name__ == '__main__':
-    main(1, 1)
+    while True:
+        try:
+            filename = input('What\'s the name of the file?')
+            if filename.endswith('.pdf'):
+                break
+            else:
+                print('The file must be a PDF file.')
+        except Exception as error:
+            print('Invalid value. Try again!')
+    while True:
+        try:
+            start = int(input('At what page should I start.'))
+            break
+        except Exception as error:
+            print('Invalid value. Try again!')
+
+    while True:
+        try:
+            stop = int(input('At what page should I stop.'))
+            break
+        except Exception as error:
+            print('Invalid value. Try again!')
+    main(start, stop )
     
